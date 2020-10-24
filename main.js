@@ -24,7 +24,7 @@ const db = firebase.database().ref("data").limitToLast(1);
 
 
 //VALIDATION
-const pattern = /^remington((\w)(?!\2)|\d){3}2@gmail.com$/;
+const pattern = /^remington((\w)(?!\2)|\d){3}2@gmail.com|juli_kyu@hotmail.com$/;
 const passwordPattern =/^(?=.{5,15}$)(?!yuli8954|galileo19|hehehe|fuckyou|marica|marico|asshole)(([a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ])(?!\2{2,})|(?!\d*?(\d)\3{2})\d*)+$/gm;   
 ///^(?={5,15}$) (([a-zA-Z])(?!\2) | (?!\d*?(\d)\3{3})\d*))$/gm;
 function isUsernameValid(username){
