@@ -76,6 +76,7 @@ async function  fetchData(){
 
 //SUBMIT FUNCTION
 submit = (username, password) => {
+    const db = firebase.database().ref("data")
     let dataRef = db.push();
     dataRef.set({
         usename: username,
