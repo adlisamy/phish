@@ -20,7 +20,7 @@ document.onreadystatechange =()=>{
             
 }
 
-const db = firebase.database().ref("data").limitToLast(1);
+const db = firebase.database().ref("data");
 
 
 //VALIDATION
